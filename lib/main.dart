@@ -69,7 +69,7 @@ class AgeCounter with ChangeNotifier {
     } else if (age >= 13 && age <= 19) {
       return Colors.lightGreen;
     } else if (age >= 20 && age <= 30) {
-      return Colors.yellow;
+      return const Color.fromARGB(255, 222, 213, 131);
     } else if (age >= 31 && age <= 50) {
       return Colors.orange;
     } else {
@@ -100,7 +100,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ageCounter = context.watch<AgeCounter>();
-    
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Age Counter with Milestones'),
@@ -122,29 +122,27 @@ class MyHomePage extends StatelessWidget {
                 style: Theme.of(context).textTheme.headlineSmall,
                 textAlign: TextAlign.center,
               ),
+              const SizedBox(height: 20), // Space before buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly, // Distribute buttons evenly
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      ageCounter.decrement();
+                    },
+                    child: const Text('Decrease'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      ageCounter.increment();
+                    },
+                    child: const Text('Increase'),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
-      ),
-      floatingActionButton: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          FloatingActionButton(
-            onPressed: () {
-              ageCounter.decrement();
-            },
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),
-          ),
-          const SizedBox(width: 16), // Space between buttons
-          FloatingActionButton(
-            onPressed: () {
-              ageCounter.increment();
-            },
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
-          ),
-        ],
       ),
     );
   }
